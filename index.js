@@ -72,4 +72,4 @@ client.on("messageCreate", (message) => {
   }
 });
 
-client.login("TON_TOKEN_ICI");
+client.login(process.env.TOKEN);
