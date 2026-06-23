@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Vorax Legendary</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial;
+  background: linear-gradient(135deg, #020617, #0f172a);
+  color: white;
+}
+
+header {
+  padding: 20px;
+  text-align: center;
+  font-size: 28px;
+  color: #22c55e;
+  font-weight: bold;
+}
+
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.card {
+  background: #111827;
+  padding: 20px;
+  margin: 15px;
+  width: 300px;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.5);
+}
+
+input {
+  width: 90%;
+  padding: 10px;
+  margin: 5px 0;
+  border-radius: 5px;
+  border: none;
+}
+
+button {
+  padding: 10px;
+  background: #22c55e;
+  border: none;
+  border-radius: 5px;
+  color: black;
+  font-weight: bold;
+  cursor: pointer;
+  width: 100%;
+}
+
+.product {
+  background: #1f2937;
+  margin: 5px;
+  padding: 10px;
+  border-radius: 5px;
+}
+</style>
+</head>
+
+<body>
+
+<header>🚀 Vorax Legendary</header>
+
+<div class="container">
+
+  <!-- Ajouter produit -->
+  <div class="card">
+    <h3>🛒 Ajouter un produit</h3>
+    <input id="name" placeholder="Nom du produit">
+    <input id="price" placeholder="Prix">
+    <button onclick="addProduct()">Ajouter</button>
+  </div>
+
+  <!-- Liste produits -->
+  <div class="card">
+    <h3>📦 Produits</h3>
+    <div id="products"></div>
+  </div>
+
+  <!-- Infos business -->
+  <div class="card">
+    <h3>💼 Business</h3>
+    <button onclick="loadData()">Voir infos</button>
+    <div id="data"></div>
+  </div>
+
+</div>
+
+<script>
+let products = [];
+
+function addProduct() {
+  const name = document.getElementById("name").value;
+  const price = document.getElementById("price").value;
+
+  if (!name || !price) return alert("Remplis tout");
+
+  products.push({ name, price });
+  displayProducts();
+}
+
+function displayProducts() {
+  const container = document.getElementById("products");
+  container.innerHTML = "";
+
+  products.forEach(p => {
+    container.innerHTML += `
+      <div class="product">
+        ${p.name} - ${p.price} FCFA
+      </div>
+    `;
+  });
+}
+
+async function loadData() {
+  const res = await fetch("/data");
+  const data = await res.json();
+
+  document.getElementById("data").innerHTML =
+    `<p>Nom: ${data.name}</p>
+     <p>Status: ${data.status}</p>
+     <p>Revenus: ${data.revenus}</p>`;
+}
+</script>
+
+</body>
+</html>
